@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUsers, createUser, deleteUser } from '../api/usersApi';
+import { getUsers, createUser, deleteUser, updateUser } from '../api/usersApi';
 import UserForm from '../components/UserForm';
 import { Table, Button, Container } from 'react-bootstrap';
 
@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  },[]);
 
   const fetchUsers = async () => {
     const data = await getUsers();
@@ -18,7 +18,7 @@ const Home = () => {
 
   const handleCreateOrUpdate = async (user) => {
     if (selectedUser) {
-      await createUser(user); // Cambia esta función si necesitas soporte para editar
+      await updateUser(selectedUser.id, user); // Cambia esta función si necesitas soporte para editar
     } else {
       await createUser(user);
     }
