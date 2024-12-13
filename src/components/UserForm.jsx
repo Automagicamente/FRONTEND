@@ -1,46 +1,83 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
 
-const UserForm = ({ onSubmit, initialData = {} }) => {
-  const [name, setName] = useState(initialData.name || '');
-  const [email, setEmail] = useState(initialData.email || '');
-  const [password, setPassword] = useState(initialData.password || '');
-  const [comment, setComment] = useState(initialData.comment || '');
+const UserForm = ({ onSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    comment: '',
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ name, email, password, comment });
+    onSubmit(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <textarea
-        placeholder="Comment"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="formName">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          name="name"
+          placeholder="Enter name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formEmail">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          type="email"
+          name="email"
+          placeholder="Enter email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          name="password"
+          placeholder="Enter password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formComment">
+        <Form.Label>Comment</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="comment"
+          placeholder="Enter comment"
+          value={formData.comment}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
   );
 };
 

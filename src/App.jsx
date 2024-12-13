@@ -1,13 +1,15 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import UserForm from './components/UserForm';
 
-import './App.css'
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/crear" element={<UserForm />} />
+      {/* Otras rutas pueden ir aquí */}
+    </Routes>
+  </Router>
+);
 
-function App() {
-  
-  return (
-    <>
-      
-    </>
-  )
-}
-
-export default App
+export default App;
