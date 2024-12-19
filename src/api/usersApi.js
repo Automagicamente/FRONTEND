@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/user'; // Cambia la URL según tu configuración
+const API_URL = import.meta.env.VITE_API_URL; // Cambia la URL según tu configuración
 
 export const getUsers = async () => {
   const response = await fetch(API_URL);
